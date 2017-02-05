@@ -1,5 +1,5 @@
-resource "aws_iam_role" "iam_for_lambda" {
-  name = "iam_for_lambda"
+resource "aws_iam_role" "lambda_role" {
+  name = "s3-sftp-bridge-${var.integration_name}"
 
   assume_role_policy = <<EOF
 {
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "lambda_s3_access" {
-  role = "${aws_iam_role.iam_for_lambda.id}"
+  role = "${aws_iam_role.lambda_role.id}"
   name = "s3_access"
 
   policy = <<EOF
@@ -43,7 +43,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "lambda_logging" {
-  role = "${aws_iam_role.iam_for_lambda.id}"
+  role = "${aws_iam_role.lambda_role.id}"
   name = "logging"
 
   policy = <<EOF
@@ -70,7 +70,7 @@ resource "aws_lambda_function" "s3_sftp_bridge_lambda" {
   function_name = "s3-sftp-bridge-${var.integration_name}"
   description   = "Used to sync files between S3 and SFTP servers"
   runtime       = "nodejs4.3"
-  role          = "${aws_iam_role.iam_for_lambda.arn}"
+  role          = "${aws_iam_role.lambda_role.arn}"
   handler       = "exports.handle"
 
   environment {
