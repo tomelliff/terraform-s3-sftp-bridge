@@ -1,0 +1,12 @@
+{
+  "stream1": {
+    "s3Location": "your-bucket-name/destination/directory",
+    "sftpConfig": {
+      "host": "hostname",
+      "port": 2222,
+      "s3PrivateKey": "another-bucket-name/path/to/private_key",
+      "username": "user"
+    },
+    "sftpLocation": "my-directory"
+  }
+}

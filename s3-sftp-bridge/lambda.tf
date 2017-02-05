@@ -64,6 +64,14 @@ resource "aws_iam_role_policy" "lambda_logging" {
 EOF
 }
 
+resource "aws_kms_key" "configuration_key" {
+  description = "s3-sftp-bridge-${var.integration_name}"
+
+  provisioner "local-exec" {
+    command = "aws kms encrypt --key-id ${aws_kms_key.configuration_key.key_id} --output text --plaintext fileb://${var.config_file} --query CiphertextBlob > encrypted_config"
+  }
+}
+
 resource "aws_lambda_function" "s3_sftp_bridge_lambda" {
   s3_bucket     = "${var.lambda_s3_bucket}"
   s3_key        = "${var.lambda_s3_key}"
@@ -75,7 +83,9 @@ resource "aws_lambda_function" "s3_sftp_bridge_lambda" {
 
   environment {
     variables = {
-      foo = "bar"
+      CONFIG = "${file("encrypted_config")}"
     }
   }
+
+  depends_on = ["aws_kms_key.configuration_key"]
 }

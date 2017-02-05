@@ -2,6 +2,8 @@ variable "aws_account_id" {}
 
 variable "integration_name" {}
 
+variable "config_file" {}
+
 variable "s3_versioning" {
   default = "false"
 }
