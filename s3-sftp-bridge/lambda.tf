@@ -72,6 +72,10 @@ resource "aws_kms_key" "configuration_key" {
   }
 }
 
+output "kms_key_id" {
+  value = "${aws_kms_key.configuration_key.key_id}"
+}
+
 resource "aws_lambda_function" "s3_sftp_bridge_lambda" {
   s3_bucket     = "${var.lambda_s3_bucket}"
   s3_key        = "${var.lambda_s3_key}"
@@ -82,6 +86,6 @@ resource "aws_lambda_function" "s3_sftp_bridge_lambda" {
   handler       = "exports.handle"
 
   lifecycle {
-    ignore_changes = [ "environment.variable" ]
+    ignore_changes = ["environment.variable"]
   }
 }
