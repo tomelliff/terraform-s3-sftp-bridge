@@ -81,11 +81,7 @@ resource "aws_lambda_function" "s3_sftp_bridge_lambda" {
   role          = "${aws_iam_role.lambda_role.arn}"
   handler       = "exports.handle"
 
-  environment {
-    variables = {
-      CONFIG = "${file("encrypted_config")}"
-    }
+  lifecycle {
+    ignore_changes = [ "environment.variable" ]
   }
-
-  depends_on = ["aws_kms_key.configuration_key"]
 }
