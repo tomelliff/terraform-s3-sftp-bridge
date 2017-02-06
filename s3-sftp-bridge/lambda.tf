@@ -66,10 +66,6 @@ EOF
 
 resource "aws_kms_key" "configuration_key" {
   description = "s3-sftp-bridge-${var.integration_name}"
-
-  provisioner "local-exec" {
-    command = "aws kms encrypt --key-id ${aws_kms_key.configuration_key.key_id} --output text --plaintext fileb://${var.config_file} --query CiphertextBlob > encrypted_config"
-  }
 }
 
 output "kms_key_id" {
