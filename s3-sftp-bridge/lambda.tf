@@ -86,6 +86,6 @@ resource "aws_lambda_function" "s3_sftp_bridge_lambda" {
   handler       = "exports.handle"
 
   lifecycle {
-    ignore_changes = ["environment.variable"]
+    ignore_changes = ["environment.variables.*"]
   }
 }
