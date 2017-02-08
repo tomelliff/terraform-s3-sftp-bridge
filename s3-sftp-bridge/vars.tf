@@ -15,3 +15,7 @@ variable "lambda_s3_key" {
 variable "lambda_s3_bucket" {
   default = "com.gilt.public.backoffice"
 }
+
+variable "lambda_handler" {
+  default = "main.handle"
+}

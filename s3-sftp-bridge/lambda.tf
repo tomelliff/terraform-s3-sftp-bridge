@@ -79,7 +79,7 @@ resource "aws_lambda_function" "s3_sftp_bridge_lambda" {
   description   = "Used to sync files between S3 and SFTP servers"
   runtime       = "nodejs4.3"
   role          = "${aws_iam_role.lambda_role.arn}"
-  handler       = "exports.handle"
+  handler       = "${var.lambda_handler}"
 
   lifecycle {
     ignore_changes = ["environment"]
