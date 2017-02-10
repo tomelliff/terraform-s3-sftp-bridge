@@ -64,6 +64,26 @@ resource "aws_iam_role_policy" "lambda_logging" {
 EOF
 }
 
+resource "aws_iam_role_policy" "lambda_kms_env_vars" {
+  role = "${aws_iam_role.lambda_role.id}"
+  name = "kms_env_vars"
+
+  policy = <<EOF
+{
+  "Version"  : "2012-10-17",
+  "Statement": [
+    {
+      "Sid"     :   "1",
+      "Effect"  :   "Allow",
+
+      "Action"  :   "kms:*",
+      "Resource":   "${aws_kms_key.configuration_key.arn}"
+    }
+  ]
+}
+EOF
+}
+
 resource "aws_kms_key" "configuration_key" {
   description = "s3-sftp-bridge-${var.integration_name}"
 }
