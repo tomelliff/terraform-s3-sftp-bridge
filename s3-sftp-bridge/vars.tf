@@ -4,6 +4,10 @@ variable "integration_name" {}
 
 variable "config_file" {}
 
+variable "s3_keys_versioning" {
+  default = "true"
+}
+
 variable "s3_versioning" {
   default = "false"
 }
