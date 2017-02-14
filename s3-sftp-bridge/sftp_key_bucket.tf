@@ -26,7 +26,7 @@ resource "aws_s3_bucket" "sftp_keys" {
       "Resource":"arn:aws:s3:::s3-sftp-bridge-sftp-keys-${var.integration_name}-${var.aws_account_id}/*",
       "Condition":{
         "StringNotEquals":{
-          "s3:x-amz-server-side-encryption-aws-kms-key-id":"${aws_kms_key.configuration_key.key_id}"
+          "s3:x-amz-server-side-encryption-aws-kms-key-id":"${aws_kms_key.configuration_key.arn}"
         }
       }
     }
